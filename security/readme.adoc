@@ -4,13 +4,112 @@
 
 = Security tips
 
-- <<Storing secrets>>
-- <<IAM Roles>>
-- <<Namespace isolation using network policy>>
+- <<Storing secrets options,Storing secrets>>
+- <<IAM Roles, IAM Roles>>
+- <<Namespace isolation using network policy, Namespace Isolation>>
 
 == Storing secrets options:
 
-- Community: Vault(1)
-- Managed Service: Secrets manager, Parameter store
+- Community: <<Vault(1), Vault>>
+- Managed Service: <<Secrets Manager, Secrets Manager>>, <<Parameter Store, Parameter Store>>
 
      (1) Commercial offering
+
+=== Vault
+Vault secures, stores, and tightly controls access to tokens, passwords, certificates, API keys, and other secrets in modern computing
+
+- Platform independent
+- Secret storage, Key rotation, Audit logs
+- High Availability
+- User and server authentication options
+- Fine-grained access control
+- Good language and tooling support
+- Under active development
+
+    # Download latest vault package for your OS
+    $ wget https://releases.hashicorp.com/vault/0.9.5/vault_0.9.5_linux_amd64.zip
+
+    # Unzip to desired location
+    $ unzip vault_0.9.5_linux_amd64.zip
+
+    # Start Vault server and configure Security Group
+    # to allow 8200
+    $ ./vault server -dev-listen-address=ip-10-0-0-120.ec2.internal:8200 -dev &
+
+    # Configure environment variables for Vault server
+    $ export VAULT_ADDR='http://ip-10-0-0-120.ec2.internal:8200'
+
+    # You are all set for dev environment (additional steps
+    # required for Production)
+    $ vault status
+    Key             Value
+    ---             -----
+    Seal Type       shamir
+    Sealed          false
+    Total Shares    1
+    Threshold       1
+    Version         0.9.5
+    Cluster Name    vault-cluster-6988d760
+    Cluster ID      05cedb61-89e9-ac5d-8623-af3b9ac89e18
+    HA Enabled      false
+
+    # store secrets
+    $ vault write secret/creds GREETING=Hello NAME=World
+    Success! Data written to: secret/creds
+
+    # read secrets
+    $ vault read -field=GREETING secret/creds
+    Hello
+
+=== Secrets Manager
+
+=== Parameter Store
+
+AWS Parameter Store provides secure, hierarchical storage for configuration data management and secrets management.
+
+- Part of AWS Systems Manager toolset
+- Integrated with AWS services (CloudFormation, ECS... etc)
+- Supports Key Management Service (KMS) encyption
+- Audit trail is logged in CloudTrail
+- No additional charge
+
+    # create KMS key
+    $ aws kms create-key --tags TagKey=Name,TagValue=k8s-secrets
+    $ aws kms create-alias \
+      --alias-name alias/k8s-secrets \
+      --target-key-id 59ddde10-7849-475c-b32c-acc4923f4ebe
+
+    # Secure IAM for Key Admin, Key Usage and Worker nodes for
+    # accessing KMS and SSM
+
+    # store secrets
+    $ aws ssm put-parameter \
+      --name GREETING --value Hello \
+      --type SecureString \
+      --key-id 59ddde10-7849-475c-b32c-acc4923f4ebe
+
+    # read secrets
+    $ aws ssm get-parameter --name GREETING
+    {
+        "Parameter": {
+            "Version": 1,
+            "Type": "SecureString",
+            "Name": "GREETING",
+            "Value": "AQICAHiPZuTFyN+UYY0Zaz6j112VjYXbhJBfydCgIm1+FUsEGQEb8IRcHBLHa2o2q1DD/kMzAAAAYzBhBgkqhkiG9w0BBwagVDBSAgEAME0GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMD1Udc7QHy60IB5qrAgEQgCBi1znSGkxLPB7KmWdtaPocs4ILERjX3VaJDi8dV2maFg=="
+        }
+    }
+
+    # read secrets in clear text
+    $ aws ssm get-parameter --name GREETING --with-decryption
+    {
+        "Parameter": {
+            "Name": "GREETING",
+            "Type": "SecureString",
+            "Value": "Hello",
+            "Version": 1
+        }
+    }
+
+== IAM Roles
+
+== Namespace isolation using network policy
