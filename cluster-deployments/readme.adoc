@@ -1,0 +1,75 @@
+= Cluster Deployments tips
+:toc:
+:icons:
+:linkattrs:
+
+== Choices of Cluster Deployments
+
+- Community: kops, kubeadm,
+- Managed Service: EKS
+- Packaged: CoreOS Tectonic(1), Red Hat Openshift (1)
+         (1) Commercial offering
+
+=== kops
+
+Kops helps you create, destroy, upgrade and maintain highly available, Kubernetes clusters from the command line
+
+- Fully automated installation
+- Deploys Highly Available (HA) Kubernetes Masters
+- Self-healing: everything runs in Auto-Scaling Groups
+- Community support by SIG AWS
+- Available on Github: https://github.com/kubernetes/kops
+
+    $ export AWS_AVAILABILITY_ZONES=${ZONES:-"us-east-1b,us-east-1c,us-east-1d"}
+    $ export KOPS_STATE_STORE="s3://kubernetes-aws-io"
+    $ kops create cluster cluster.k8s.local \
+      --master-count 3 \
+      --master-size m4.large \
+      --node-count 5 \
+      --node-size m4.large \
+      --zones $AWS_AVAILABILITY_ZONES \
+      --networking calico \
+      --yes
+
+=== kubeadm
+
+KUBEADM is a toolkit that helps you bootstrap a best-practice Kubernetes cluster in an easy, reasonably secure and extensible way
+
+- By design, Kubeadm cares only about bootstrapping, not about provisioning machines
+- Installing various nice-to-have addons, like the Kubernetes Dashboard, monitoring solutions, and cloud-specific addons, is not in scope
+- kubeadm expects the user to bring a machine to execute on, the type doesn’t matter, can be a Linux laptop, virtual machine, physical/cloud server or Raspberry Pi
+- This makes kubeadm well suited to integrate with provisioning systems of different kinds (e.g. Terraform, Ansible, etc.)
+
+    # Install kubeadm on your hosts,
+    # for example - ubuntu, debian:
+    $ apt-get update && apt-get install -y apt-transport-https
+    $ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+    $ cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
+    deb http://apt.kubernetes.io/ kubernetes-xenial main
+    EOF
+    $ apt-get update && apt-get install -y kubelet kubeadm kubectl
+
+    # Initialize your master nodes
+    $ kubeadm init
+
+    # Install pod network, for example - calico:
+    $ kubectl apply -f https://docs.projectcalico.org/v3.0/getting-started/kubernetes/installation/hosted/kubeadm/1.7/calico.yaml
+
+    # To join your worker nodes to the cluster, run the
+    # output of kube init command
+    $ kubeadm join --token <token> <master-ip>:<master-port> --discovery-token-ca-cert-hash sha256:<hash>
+
+=== EKS
+
+EKS is managed Kubernetes service from AWS. It offers highly available master  and etcd nodes and automated version upgrades and patching for the masters
+
+- Highly available masters deployed across three availability zones
+- Platform for enterprises to run production-grade workloads
+- Provides a native and upstream Kubernetes experience
+- Not forced to use additional AWS services, but offer seamless integration
+- Actively contributes to the Kubernetes project
+
+    $ aws eks create-cluster \
+       --cluster-name <> \
+       --desired-master-version <> \
+       --role-arn <>
