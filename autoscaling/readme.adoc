@@ -3,3 +3,6 @@
 :linkattrs:
 
 = Autoscaling tips
+
+- Master, Worker Nodes
+- Pods, Deployments
