@@ -1,0 +1,15 @@
+==Ideas for how to use this content:
+
+1. You are invited to speak at an event
+2. Speaker would clone the repo locally.
+3. Speaker would execute the setup script.
+4. Speaker would go to the event.
+5. Speaker would open up the list of topics (bit.ly) and then invite attendees to vote on the topics that they would like to learn more about.
+6. Wait for attendees to vote ... (30 seconds to 1 minute)
+7. Speaker brings up a Kibana dashboard to show the results of the survey
+8. Depending on time allocated - 60 or 30 or 45 minute session, the speaker then covers the top 6, 5, 3 topics
+9. Last step invite customers to fill out a CSAT survey hosted on the cluster.
+
+Tools for converting asciidocs to html5 decks:
+
+https://asciidoctor.org/docs/asciidoctor-revealjs/
