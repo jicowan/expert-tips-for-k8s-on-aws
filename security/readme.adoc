@@ -4,14 +4,10 @@
 
 = Security tips
 
-- <<Storing secrets options,Storing secrets>>
-- <<IAM Roles, IAM Roles>>
-- <<Namespace isolation using network policy, Namespace Isolation>>
-
 == Storing secrets options:
 
-- Community: <<Vault(1), Vault>>
-- Managed Service: <<Secrets Manager, Secrets Manager>>, <<Parameter Store, Parameter Store>>
+- Community: Vault
+- Managed Service: Secrets Manager, Parameter Store
 
      (1) Commercial offering
 
