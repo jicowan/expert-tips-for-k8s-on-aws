@@ -1,4 +1,5 @@
-= Autoscaling tips
 :toc:
 :icons:
 :linkattrs:
+
+= Autoscaling tips

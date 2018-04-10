@@ -1,0 +1,16 @@
+:toc:
+:icons:
+:linkattrs:
+
+= Security tips
+
+- <<Storing secrets>>
+- <<IAM Roles>>
+- <<Namespace isolation using network policy>>
+
+== Storing secrets options:
+
+- Community: Vault(1)
+- Managed Service: Secrets manager, Parameter store
+
+     (1) Commercial offering
