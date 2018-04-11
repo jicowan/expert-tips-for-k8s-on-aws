@@ -6,3 +6,7 @@
 
 - Master, Worker Nodes
 - Pods, Deployments
+
+== Autoscaling Master & Worker nodes
+
+== Autoscaling Pods

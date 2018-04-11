@@ -1,0 +1,5 @@
+:toc:
+:icons:
+:linkattrs:
+
+= Storage tips

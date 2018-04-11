@@ -1,7 +1,8 @@
-= Cluster Deployments tips
 :toc:
 :icons:
 :linkattrs:
+
+= Cluster Deployments tips
 
 == Choices of Cluster Deployments
 
