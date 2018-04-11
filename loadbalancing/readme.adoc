@@ -1,0 +1,35 @@
+:toc:
+:icons:
+:linkattrs:
+
+= Load Balancing tips
+
+== Simple Load Balancing
+- Community: Nginx
+- Managed Service: ELB
+
+=== Classic Load Balancing using ELB
+
+Architecture diagram for ELB
+
+Sample Kubernetes manifest for using ELB in AWS
+
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: nginx
+      namespace: default
+      annotations: {}
+    spec:
+      ports:
+      - name: http
+        port: 80
+        protocol: TCP
+        targetPort: 80
+      selector:
+        app: nginx
+    type: LoadBalancer
+
+== Ingress Controller
+- Community: Nginx, CoreOS, Zolando
+- Managed Service: ALB, NLB
