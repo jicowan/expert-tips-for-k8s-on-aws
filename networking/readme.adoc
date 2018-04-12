@@ -40,5 +40,5 @@ Flannel makes implementing an overlay network relatively simple, however there a
 
 - It then hands out these IPs to pods on the host, connects the ENI to the virtual ethernet port (veth) created on the pod, and lets the Linux kernel take care of the rest.
 
-image::images/aws-vpc-cni.png[] 
+image::images/aws-vpc-cni.jpg[] 
 
