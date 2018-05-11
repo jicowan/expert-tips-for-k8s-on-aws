@@ -16,6 +16,10 @@
     ...
 
 - Never write Secrets to disk
+- Maintain good hygiene with Docker images
+** Frequently scan for security vulnerabilities
+** Adhere to organization policies while building images and only use authorized images
+
 - Block access to EC2 Instance Metadata
 
     # let's say I have gained control over your web server running in a pod
