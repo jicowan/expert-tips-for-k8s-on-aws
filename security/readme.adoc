@@ -4,9 +4,47 @@
 
 = Security tips
 
+== General Kubernetes tips
+
+- Ensure Role-Based Access Control (RBAC) is enabled on your Cluster
+
+    $ kops edit cluster ${NAME}
+    ...
+    spec:
+     authorization:
+       rbac: {}
+    ...
+
+- Never write Secrets to disk
+- Block access to EC2 Instance Metadata
+
+    # let's say I have gained control over your web server running in a pod
+    # I can easily find IAM role attached to your EC2 Instance and get the API keys
+    $ kubectl exec my-ngin/meta-data/iam/security-credentials/54.169.254/latest/
+      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                     Dload  Upload   Total   Spent    Left  Speed
+    100    53  100    53    0     0  44915      0 --:--:-- --:--:-- --:--:-- 53000
+    ekscluster-worker-nodes-NodeInstanceRole-73ZENSV8G656
+    $ kubectl exec my-ngin/meta-data/iam/security-credentials/ekscluster-worker-nodes-NodeInstanceRole-73ZENSV8G656/
+      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                     Dload  Upload   Total   Spent    Left  Speed
+    100   882  100   882    0     0   796k      0 --:--:-- --:--:-- --:--:--  861k
+    {
+      "Code" : "Success",
+      "LastUpdated" : "2018-05-11T14:31:58Z",
+      "Type" : "AWS-HMAC",
+      "AccessKeyId" : "ASIAIXXXXAV36CNSKKYA",
+      "SecretAccessKey" : "4NZnfiakrAKT4nTLJqDANJ8s6YqWtXOI5PS5XvB/",
+      "Token" : "FQoDYXdzAWSKzClQxMx5sgMaD7tPQxkAS8++xcqZA2r2UxU+RR0uZtw6MwswKs+YTj6/BP7r5GkpuE97v52ms5h8tpqV1kTA3CvO9SH2RB0MztahWBQpTes2sXVPqP5ubC1vuoT7E+yGgb1BOWztvDkOo8Yo1WnVrE+DMEEomwk5NdpphHdYfIwR93GQlUBajikMfaEAyrL9IbIUbRTAOmbbBOmX7xKPXrziSBNAuuksOO7T6ZkBzad8LFWcROQ/3hTdjNFdrEReNLQA6x936F4BvyfzbggbOHC8Sk3geokpMLTeEnnVJM61FBQK/dXK1B/WSK1za7qStIFfC1lkf1nKeKNpC0r0b8dx1UI28dPeYmvE/Mw9ihgY2ozNDm/4oJZc+mPHTJy6lCwKD2tb+2/ORFm4hbrzO8SAqvZBWS+X2aeRQ7oOodc045dp7B5JSS/3pnamHqpS6J28MfdzVuGSYRSjhrlJIao7Vf4vt28SshsvxOp25dtAZ572vKgSR0A3rUulas7PRZmSgK8++NXWPyTHQ995jrTD6XrfP0bJTIVIyO1zrMRUY9dcR82RS8eJmb60nWRZW9RhdYLkMGxb07whdm64siowiq4Ppw4o0dLW1wU=",
+      "Expiration" : "2018-05-11T21:04:10Z"
+
+- Leverage Kubernetes namespaces for isolating environments
+
+
+
 == Storing secrets options:
 
-- Community: Vault
+- Community: Vault(1)
 - Managed Service: Secrets Manager, Parameter Store
 
      (1) Commercial offering
@@ -108,4 +146,4 @@ AWS Parameter Store provides secure, hierarchical storage for configuration data
 
 == IAM Roles
 
-== Namespace isolation using network policy
+== Namespace isolation
