@@ -4,7 +4,7 @@
 
 = Security tips
 
-== General Kubernetes tips
+== General Kubernetes tips 
 
 - Ensure Role-Based Access Control (RBAC) is enabled on your Cluster
 

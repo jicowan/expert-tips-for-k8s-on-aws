@@ -4,6 +4,12 @@
 
 = Cluster Deployments tips
 
+== General Kubernetes tips
+
+- Never deploy https://github.com/kelseyhightower/kubernetes-the-hard-way[Kubernetes cluster the hard way]
+- Deploy multi-master (at least 3 in separate Availability Zones), multi-node cluster for production deployments. Its okay to deploy single master if you are trying out things
+- Deploy at least 3 etcd nodes in separate Availability Zones to manage your Master nodes. Etcd can be part of your master node configuration but good to run separate nodes to prevent blast radius
+
 == Choices of Cluster Deployments
 
 - Community: kops, kubeadm,
