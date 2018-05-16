@@ -7,4 +7,4 @@
 
 image:kubernetes-aws-smile.png[alt="kubernetes and aws logos", align="left",width=420]
 
-This content is for anyone who is looking for Kubernetes best practices on AWS. If you plan to present this content at an event, you can review link:../resources/ideas-to-present.adoc[ideas to present] instructions so that you can easily create powerpoint from latest info available in this repo.
+This content is for anyone who is looking for Kubernetes best practices on AWS. If you plan to present this content at an event, you can review link:resources/ideas-to-present.adoc[ideas to present] instructions so that you can easily create powerpoint from latest info available in this repo.
