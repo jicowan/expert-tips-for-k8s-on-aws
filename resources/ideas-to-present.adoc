@@ -12,4 +12,5 @@
 
 Tools for converting asciidocs to html5 decks:
 
+https://github.com/gitpitch/gitpitch
 https://asciidoctor.org/docs/asciidoctor-revealjs/
