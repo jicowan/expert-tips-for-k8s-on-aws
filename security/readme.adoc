@@ -4,7 +4,7 @@
 
 = Security tips
 
-== General Kubernetes tips 
+== General Kubernetes tips
 
 - Ensure Role-Based Access Control (RBAC) is enabled on your Cluster
 
@@ -44,12 +44,10 @@
 
 - Leverage Kubernetes namespaces for isolating environments
 
-
-
 == Storing secrets options:
 
 - Community: Vault(1)
-- Managed Service: Secrets Manager, Parameter Store
+- Managed Service: Parameter Store
 
      (1) Commercial offering
 
@@ -59,47 +57,38 @@ Vault secures, stores, and tightly controls access to tokens, passwords, certifi
 - Platform independent
 - Secret storage, Key rotation, Audit logs
 - High Availability
+- Dynamic secrets
 - User and server authentication options
 - Fine-grained access control
 - Good language and tooling support
 - Under active development
 
-    # Download latest vault package for your OS
-    $ wget https://releases.hashicorp.com/vault/0.9.5/vault_0.9.5_linux_amd64.zip
+What are its use cases? Secrets Management, Encryption as a Service, Identity and Access Management
 
-    # Unzip to desired location
-    $ unzip vault_0.9.5_linux_amd64.zip
+How to get started? https://www.vaultproject.io/intro/getting-started/install.html
 
-    # Start Vault server and configure Security Group
-    # to allow 8200
-    $ ./vault server -dev-listen-address=ip-10-0-0-120.ec2.internal:8200 -dev &
-
-    # Configure environment variables for Vault server
-    $ export VAULT_ADDR='http://ip-10-0-0-120.ec2.internal:8200'
-
-    # You are all set for dev environment (additional steps
-    # required for Production)
-    $ vault status
-    Key             Value
-    ---             -----
-    Seal Type       shamir
-    Sealed          false
-    Total Shares    1
-    Threshold       1
-    Version         0.9.5
-    Cluster Name    vault-cluster-6988d760
-    Cluster ID      05cedb61-89e9-ac5d-8623-af3b9ac89e18
-    HA Enabled      false
+How do I use?
 
     # store secrets
     $ vault write secret/creds GREETING=Hello NAME=World
     Success! Data written to: secret/creds
 
     # read secrets
+    $ vault read secret/creds
+    Key               Value
+    ---               ----
+    refresh_interval  768h0m0s
+    GREETING          Hello
+    NAME              World
     $ vault read -field=GREETING secret/creds
     Hello
 
-=== Secrets Manager
+Vault Tips?
+
+- Never provide "root" credentials to your clients
+- Enable access based on an IAM role
+- Generate on demand secrets upon request
+- Leverage Audit logs in case your system is compromised
 
 === Parameter Store
 
@@ -111,14 +100,11 @@ AWS Parameter Store provides secure, hierarchical storage for configuration data
 - Audit trail is logged in CloudTrail
 - No additional charge
 
-    # create KMS key
-    $ aws kms create-key --tags TagKey=Name,TagValue=k8s-secrets
-    $ aws kms create-alias \
-      --alias-name alias/k8s-secrets \
-      --target-key-id 59ddde10-7849-475c-b32c-acc4923f4ebe
+What are its use cases?
 
-    # Secure IAM for Key Admin, Key Usage and Worker nodes for
-    # accessing KMS and SSM
+How to get started? https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-paramstore.html#sysman-paramstore-gs
+
+How do I use?
 
     # store secrets
     $ aws ssm put-parameter \
@@ -147,6 +133,9 @@ AWS Parameter Store provides secure, hierarchical storage for configuration data
             "Version": 1
         }
     }
+
+AWS Parameter Store Tips?
+
 
 == IAM Roles
 
