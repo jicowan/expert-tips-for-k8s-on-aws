@@ -100,7 +100,7 @@ AWS Parameter Store provides secure, hierarchical storage for configuration data
 - Audit trail is logged in CloudTrail
 - No additional charge
 
-What are its use cases?
+What are its use cases? Managing Secrets and Configuration data
 
 How to get started? https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-paramstore.html#sysman-paramstore-gs
 
@@ -137,6 +137,10 @@ How do I use?
 AWS Parameter Store Tips?
 
 
-== IAM Roles
+== IAM Roles options:
+Before we go into available options, let's define why is this important. 
+
+- Community: kube2IAM, kiam
+
 
 == Namespace isolation

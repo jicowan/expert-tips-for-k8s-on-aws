@@ -3,3 +3,11 @@
 :linkattrs:
 
 = Storage tips
+
+== General Kubernetes tips
+
+- Thoroughly evaluate stateful workloads before going into production. Apply proper load test procedures and go through failure mechanisms at each level (failed container, pod, node, AZ etc.)
+- Always persist data to storage system that is not ephemeral in nature.
+- Kubernetes offers basic building blocks to keep your workload up and running but the underlying workload has no knowledge of network partition, leader election, replication timeouts, latency etc.
+
+== StatefulSets
