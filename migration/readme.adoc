@@ -6,7 +6,17 @@
 
 ## Available options
 ### container-transform
-Features, What are its use cases?, How to get started?, How do I use?, Option 1 tips
+[container-transform](https://github.com/micahhausler/container-transform) is a command-line utility that can be used to convert between different container formats.  It currently supports converting between the following formats: 
+
+* Kubernetes Pod specs
+* ECS task definitions
+* Docker-compose configuration files
+* Marathon Application Definitions or Groups of Applications
+* Chronos Task Definitions
+
+With container-transform, you can also to create a systemd unit file. 
+
+If you're coming from a non-kubernetes environments, you can use this utility to migrate your container definitions to Kubernetes.   
 
 ### Heptio Ark
 Features, What are its use cases?, How to get started?, How do I use?, Option 1 tips
