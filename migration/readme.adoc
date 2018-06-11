@@ -19,9 +19,9 @@ You can also send the output to a systemd unit file.
 If you're coming from a non-kubernetes environments, you can use this utility to migrate your container definitions to Kubernetes.   
 
 ### Heptio Ark
-[Heptio Ark](https://github.com/heptio/ark) is a tool that is used to backup and restore your Kubernetes cluster.  
+[Heptio Ark](https://heptio.github.io/ark/v0.8.1/) is a tool that is used to backup and restore your Kubernetes cluster.  
 
-Features, What are its use cases?, How to get started?, How do I use?, Option 1 tips
+Although Ark doesn't migrate cloud volumes between cloud providers, you may be able to use it to migrate from a self managed k8s cluster running on AWS to EKS with minimal rework.
 
 ### [Future] ekscli
-Features, What are its use cases?, How to get started?, How do I use?, Option 1 tips
+The [ekscli](https://eksctl.io/) is a command-line utility written by Weave that can provision a new EKS cluster in 1 step.  While it doesn't support migrations today, there is an open [feature request](https://github.com/weaveworks/eksctl/issues/50) to add this to the CLI.
