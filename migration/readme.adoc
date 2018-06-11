@@ -23,5 +23,5 @@ If you're coming from a non-kubernetes environments, you can use this utility to
 
 Although Ark doesn't migrate cloud volumes between cloud providers, you may be able to use it to migrate from a self managed k8s cluster running on AWS to EKS with minimal rework.
 
-### [Future] ekscli
-The [ekscli](https://eksctl.io/) is a command-line utility written by Weave that can provision a new EKS cluster in 1 step.  While it doesn't support migrations today, there is an open [feature request](https://github.com/weaveworks/eksctl/issues/50) to add this to the CLI.
+### [Future] eksctl
+The [eksctl](https://eksctl.io/) is a command-line utility written by Weave that can provision a new EKS cluster in 1 step.  While it doesn't support migrations today, there is an open [feature request](https://github.com/weaveworks/eksctl/issues/50) to add this to the CLI.
